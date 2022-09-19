@@ -100,7 +100,7 @@ layout_test = False
 if not layout_test: # skip callback when tweaking layout
 
     # load dataset
-    df = pd.read_csv('dataset.csv')
+    df = pd.read_csv('dataset_sampled.csv') # the original dataset is too large to upload
     
     # fig 1
     @app.callback([Output(component_id='bar_plot1', component_property= 'figure'),
@@ -138,7 +138,7 @@ if not layout_test: # skip callback when tweaking layout
         
         tic = perf_counter()
         
-        subdf = (df.sample(frac = 0.2)).copy()# sample a fraction to speed up response
+        subdf = df.copy() # when using the original dataset, it is recommended to sample a fraction to speed up response
         alltweet_yearcount = (subdf.groupby('year').count().reset_index()).copy()
         
         subdf = utilfuncs.contains_hashtag(subdf, filter_hashtag)
